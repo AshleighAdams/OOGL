@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oogl", "oogl.vcproj", "{35EF7046-5983-4C42-A007-0109D722CADF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simplewindow", "..\..\samples\build\vc2008\simplewindow.vcproj", "{F0AD7199-C1D8-4FF9-9D38-709206498AEE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{35EF7046-5983-4C42-A007-0109D722CADF} = {35EF7046-5983-4C42-A007-0109D722CADF}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35EF7046-5983-4C42-A007-0109D722CADF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{35EF7046-5983-4C42-A007-0109D722CADF}.Debug|Win32.Build.0 = Debug|Win32
+		{35EF7046-5983-4C42-A007-0109D722CADF}.Release|Win32.ActiveCfg = Release|Win32
+		{35EF7046-5983-4C42-A007-0109D722CADF}.Release|Win32.Build.0 = Release|Win32
+		{F0AD7199-C1D8-4FF9-9D38-709206498AEE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F0AD7199-C1D8-4FF9-9D38-709206498AEE}.Debug|Win32.Build.0 = Debug|Win32
+		{F0AD7199-C1D8-4FF9-9D38-709206498AEE}.Release|Win32.ActiveCfg = Release|Win32
+		{F0AD7199-C1D8-4FF9-9D38-709206498AEE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

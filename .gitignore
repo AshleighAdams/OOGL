@@ -1,0 +1,7 @@
+*.ncb
+*.sdf
+*.suo
+*.ilk
+*.pdb
+/ipch/*
+temp/*
