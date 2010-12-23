@@ -31,64 +31,34 @@
 
 #pragma once
 
-#ifndef OOGL_WINDOW_HPP
-#define OOGL_WINDOW_HPP
+#ifndef OOGL_CONTEXT_HPP
+#define OOGL_CONTEXT_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <oogl/WindowFlags.hpp>
-#include <oogl/Context.hpp>
-
-#ifdef _WIN32
-	#include <windows.h>
-#endif
+#include <oogl/Buffer.hpp>
 
 namespace GL
 {
 	////////////////////////////////////////////////////////////
-	// Render window.
+	// OpenGL context
 	////////////////////////////////////////////////////////////
 
-	class Window
+	class Context
 	{
+	friend class Window;
+
 	public:
-		Window( unsigned int width, unsigned int height, int x, int y, const char* title, unsigned int flags = WindowFlags::Caption );
-
-		bool IsOpen();
-
-		void GetEvents();
-
-		void SetTitle( const char* title );
-		void SetPosition( int x, int y );
-		void SetSize( unsigned int width, unsigned int height );
-
-		void SetVisible( bool visible );
-
-		unsigned int GetWidth();
-		unsigned int GetHeight();
-
-		int GetX();
-		int GetY();
-
-		void Center();
-
-		Context& GetContext();
-		
-		void Present();
+		void ClearColor( float r, float g, float b, float a = 1.0f );
+		void Clear( unsigned int buffers );
 		
 	private:
-		void* _handle;
-		void* _handle2;
+		Context() {}
+		Context( void* window );
 		
-		bool _open;
-		Context _context;
-
-		#ifdef _WIN32
-			static LRESULT CALLBACK WindowEvent( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
-			LRESULT Event( UINT msg, WPARAM wParam, LPARAM lParam );
-		#endif
+		void* _context;
 	};
 }
 

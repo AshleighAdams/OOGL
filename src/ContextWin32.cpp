@@ -29,67 +29,47 @@
 // 
 ////////////////////////////////////////////////////////////
 
-#pragma once
-
-#ifndef OOGL_WINDOW_HPP
-#define OOGL_WINDOW_HPP
+#ifdef _WIN32
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <oogl/WindowFlags.hpp>
 #include <oogl/Context.hpp>
 
-#ifdef _WIN32
-	#include <windows.h>
-#endif
+#include <windows.h>
+#include <gl/gl.h>
 
 namespace GL
 {
-	////////////////////////////////////////////////////////////
-	// Render window.
-	////////////////////////////////////////////////////////////
-
-	class Window
+	Context::Context( void* window )
 	{
-	public:
-		Window( unsigned int width, unsigned int height, int x, int y, const char* title, unsigned int flags = WindowFlags::Caption );
+		HDC dc = GetDC( (HWND)window );
 
-		bool IsOpen();
+		// Choose appropriate pixel format
+		PIXELFORMATDESCRIPTOR pfd;
+		ZeroMemory( &pfd, sizeof( pfd ) );
+		pfd.nSize = sizeof( pfd );
+		pfd.nVersion = 1;
+		pfd.dwFlags = PFD_DOUBLEBUFFER | PFD_SUPPORT_OPENGL | PFD_DRAW_TO_WINDOW;
+		pfd.iPixelType = PFD_TYPE_RGBA;
+		pfd.cColorBits = 32;
+		pfd.cDepthBits = 32;
+		pfd.iLayerType = PFD_MAIN_PLANE;
+		int pixelFormat = ChoosePixelFormat( dc, &pfd );
+		SetPixelFormat( dc, pixelFormat, &pfd );
 
-		void GetEvents();
+		// Create the context
+		HGLRC context = wglCreateContext( dc );
+		wglMakeCurrent( dc, context );
 
-		void SetTitle( const char* title );
-		void SetPosition( int x, int y );
-		void SetSize( unsigned int width, unsigned int height );
+		// Set the initial viewport
+		RECT dimensions;
+		GetWindowRect( (HWND)window, &dimensions );
+		glViewport( 0, 0, dimensions.right - dimensions.left, dimensions.bottom - dimensions.top );
 
-		void SetVisible( bool visible );
-
-		unsigned int GetWidth();
-		unsigned int GetHeight();
-
-		int GetX();
-		int GetY();
-
-		void Center();
-
-		Context& GetContext();
-		
-		void Present();
-		
-	private:
-		void* _handle;
-		void* _handle2;
-		
-		bool _open;
-		Context _context;
-
-		#ifdef _WIN32
-			static LRESULT CALLBACK WindowEvent( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
-			LRESULT Event( UINT msg, WPARAM wParam, LPARAM lParam );
-		#endif
-	};
+		_context = context;
+	}
 }
 
 #endif

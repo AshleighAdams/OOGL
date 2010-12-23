@@ -31,65 +31,24 @@
 
 #pragma once
 
-#ifndef OOGL_WINDOW_HPP
-#define OOGL_WINDOW_HPP
-
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
-
-#include <oogl/WindowFlags.hpp>
-#include <oogl/Context.hpp>
-
-#ifdef _WIN32
-	#include <windows.h>
-#endif
+#ifndef OOGL_BUFFER_HPP
+#define OOGL_BUFFER_HPP
 
 namespace GL
 {
 	////////////////////////////////////////////////////////////
-	// Render window.
+	// Enumeration of OpenGL buffers.
 	////////////////////////////////////////////////////////////
 
-	class Window
+	namespace Buffer
 	{
-	public:
-		Window( unsigned int width, unsigned int height, int x, int y, const char* title, unsigned int flags = WindowFlags::Caption );
-
-		bool IsOpen();
-
-		void GetEvents();
-
-		void SetTitle( const char* title );
-		void SetPosition( int x, int y );
-		void SetSize( unsigned int width, unsigned int height );
-
-		void SetVisible( bool visible );
-
-		unsigned int GetWidth();
-		unsigned int GetHeight();
-
-		int GetX();
-		int GetY();
-
-		void Center();
-
-		Context& GetContext();
-		
-		void Present();
-		
-	private:
-		void* _handle;
-		void* _handle2;
-		
-		bool _open;
-		Context _context;
-
-		#ifdef _WIN32
-			static LRESULT CALLBACK WindowEvent( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
-			LRESULT Event( UINT msg, WPARAM wParam, LPARAM lParam );
-		#endif
-	};
+		enum
+		{
+			Color = 1,
+			Depth = 1 << 1,
+			Stencil = 1 << 2
+		};
+	}
 }
 
 #endif

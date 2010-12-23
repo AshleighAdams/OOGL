@@ -41,6 +41,7 @@ namespace GL
 {
 	Window::Window( unsigned int width, unsigned int height, int x, int y, const char* title, unsigned int flags )
 	{
+		// Create the window
 		WNDCLASSEX windowClass;
 		ZeroMemory( &windowClass, sizeof( windowClass ) );
 		windowClass.cbSize = sizeof( WNDCLASSEX );
@@ -71,8 +72,11 @@ namespace GL
 		
 		if ( flags & WindowFlags::CenterScreen )
 			Center();
-		
+
 		_open = true;
+
+		// Create the OpenGL context
+		_context = Context( _handle );
 	}
 
 	void Window::GetEvents()
@@ -101,28 +105,33 @@ namespace GL
 		SetWindowPos( (HWND)_handle, 0, 0, 0, width, height, SWP_NOZORDER | SWP_NOMOVE );
 	}
 
-	unsigned int Window::Width()
+	void Window::SetVisible( bool visible )
+	{
+		ShowWindow( (HWND)_handle, visible ? SW_NORMAL : SW_HIDE );
+	}
+
+	unsigned int Window::GetWidth()
 	{
 		RECT dimensions;
 		GetWindowRect( (HWND)_handle, &dimensions );
 		return dimensions.right - dimensions.left;
 	}
 
-	unsigned int Window::Height()
+	unsigned int Window::GetHeight()
 	{
 		RECT dimensions;
 		GetWindowRect( (HWND)_handle, &dimensions );
 		return dimensions.bottom - dimensions.top;
 	}
 
-	int Window::X()
+	int Window::GetX()
 	{
 		RECT dimensions;
 		GetWindowRect( (HWND)_handle, &dimensions );
 		return dimensions.left;
 	}
 
-	int Window::Y()
+	int Window::GetY()
 	{
 		RECT dimensions;
 		GetWindowRect( (HWND)_handle, &dimensions );
@@ -137,9 +146,14 @@ namespace GL
 		SetWindowPos( (HWND)_handle, 0, desktop.right / 2 - window.right / 2, desktop.bottom / 2 - window.bottom / 2, 0, 0, SWP_NOZORDER | SWP_NOSIZE );
 	}
 
-	void Window::SetVisible( bool visible )
+	Context& Window::GetContext()
 	{
-		ShowWindow( (HWND)_handle, visible ? SW_NORMAL : SW_HIDE );
+		return _context;
+	}
+
+	void Window::Present()
+	{
+		SwapBuffers( (HDC)_handle2 );
 	}
 
 	LRESULT Window::Event( UINT msg, WPARAM wParam, LPARAM lParam )
@@ -165,6 +179,7 @@ namespace GL
 		{
 			window = reinterpret_cast<Window*>( ((LPCREATESTRUCT)lParam)->lpCreateParams );
 			window->_handle = hWnd;
+			window->_handle2 = GetDC( hWnd );
 
 			SetWindowLong( hWnd, GWL_USERDATA, reinterpret_cast<long>( window ) );
 
