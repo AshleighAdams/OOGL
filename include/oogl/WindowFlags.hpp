@@ -48,7 +48,8 @@ namespace GL
 			Minimized = 1 << 1,
 			Maximized = 1 << 2,
 			Caption = 1 << 3,
-			Sizable = 1 << 4
+			Sizable = 1 << 4,
+			Hidden = 1 << 5
 		};
 	}
 }

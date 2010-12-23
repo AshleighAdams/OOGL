@@ -1,7 +1,9 @@
 *.ncb
+*.user
 *.sdf
 *.suo
 *.ilk
 *.pdb
-/ipch/*
+*.opensdf
+build/vc2010/ipch/*
 temp/*

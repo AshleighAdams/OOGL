@@ -12,4 +12,6 @@ int main()
 	{
 		window.GetEvents();
 	}
+
+	return 0;
 }

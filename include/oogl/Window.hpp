@@ -63,6 +63,14 @@ namespace GL
 		void SetPosition( int x, int y );
 		void SetSize( unsigned int width, unsigned int height );
 
+		void SetVisible( bool visible );
+
+		unsigned int Width();
+		unsigned int Height();
+
+		int X();
+		int Y();
+
 		void Center();
 
 	private:

@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Window.cpp" />
+    <ClCompile Include="..\..\src\WindowWin32.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{79DE5793-21FD-41EB-B036-E4776E842531}</ProjectGuid>
