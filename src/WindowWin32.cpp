@@ -76,14 +76,14 @@ namespace GL
 		_open = true;
 
 		// Create the OpenGL context
-		_context = Context( _handle );
+		_context = Context( _window );
 	}
 
 	void Window::GetEvents()
 	{
 		MSG msg;
 			
-		while ( PeekMessage( &msg, (HWND)_handle, 0, 0, PM_REMOVE ) )
+		while ( PeekMessage( &msg, _window, 0, 0, PM_REMOVE ) )
 		{
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
@@ -92,49 +92,49 @@ namespace GL
 
 	void Window::SetTitle( const char* title )
 	{
-		SetWindowText( (HWND)_handle, title );
+		SetWindowText( _window, title );
 	}
 
 	void Window::SetPosition( int x, int y )
 	{
-		SetWindowPos( (HWND)_handle, 0, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE );
+		SetWindowPos( _window, 0, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE );
 	}
 
 	void Window::SetSize( unsigned int width, unsigned int height )
 	{
-		SetWindowPos( (HWND)_handle, 0, 0, 0, width, height, SWP_NOZORDER | SWP_NOMOVE );
+		SetWindowPos( _window, 0, 0, 0, width, height, SWP_NOZORDER | SWP_NOMOVE );
 	}
 
 	void Window::SetVisible( bool visible )
 	{
-		ShowWindow( (HWND)_handle, visible ? SW_NORMAL : SW_HIDE );
+		ShowWindow( _window, visible ? SW_NORMAL : SW_HIDE );
 	}
 
 	unsigned int Window::GetWidth()
 	{
 		RECT dimensions;
-		GetWindowRect( (HWND)_handle, &dimensions );
+		GetWindowRect( _window, &dimensions );
 		return dimensions.right - dimensions.left;
 	}
 
 	unsigned int Window::GetHeight()
 	{
 		RECT dimensions;
-		GetWindowRect( (HWND)_handle, &dimensions );
+		GetWindowRect( _window, &dimensions );
 		return dimensions.bottom - dimensions.top;
 	}
 
 	int Window::GetX()
 	{
 		RECT dimensions;
-		GetWindowRect( (HWND)_handle, &dimensions );
+		GetWindowRect( _window, &dimensions );
 		return dimensions.left;
 	}
 
 	int Window::GetY()
 	{
 		RECT dimensions;
-		GetWindowRect( (HWND)_handle, &dimensions );
+		GetWindowRect( _window, &dimensions );
 		return dimensions.top;
 	}
 
@@ -142,13 +142,13 @@ namespace GL
 	{
 		RECT desktop, window;
 		GetWindowRect( GetDesktopWindow(), &desktop );
-		GetWindowRect( (HWND)_handle, &window );
-		SetWindowPos( (HWND)_handle, 0, desktop.right / 2 - window.right / 2, desktop.bottom / 2 - window.bottom / 2, 0, 0, SWP_NOZORDER | SWP_NOSIZE );
+		GetWindowRect( _window, &window );
+		SetWindowPos( _window, 0, desktop.right / 2 - window.right / 2, desktop.bottom / 2 - window.bottom / 2, 0, 0, SWP_NOZORDER | SWP_NOSIZE );
 	}
 
 	void Window::Present()
 	{
-		SwapBuffers( (HDC)_handle2 );
+		SwapBuffers( _device );
 	}
 
 	LRESULT Window::Event( UINT msg, WPARAM wParam, LPARAM lParam )
@@ -160,7 +160,7 @@ namespace GL
 			break;
 
 		default:
-			return DefWindowProc( (HWND)_handle, msg, wParam, lParam );
+			return DefWindowProc( _window, msg, wParam, lParam );
 		}
 
 		return 0;
@@ -173,8 +173,8 @@ namespace GL
 		if ( msg == WM_NCCREATE )
 		{
 			window = reinterpret_cast<Window*>( ((LPCREATESTRUCT)lParam)->lpCreateParams );
-			window->_handle = hWnd;
-			window->_handle2 = GetDC( hWnd );
+			window->_window = hWnd;
+			window->_device = GetDC( hWnd );
 
 			SetWindowLong( hWnd, GWL_USERDATA, reinterpret_cast<long>( window ) );
 

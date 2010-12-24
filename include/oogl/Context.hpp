@@ -65,8 +65,8 @@ namespace GL
 		Context() {}
 
 		#if defined( _WIN32 )
-            Context( void* window );
-            void* _context;
+            Context( HWND window );
+            HGLRC _context;
         #elif defined( __linux__ )
             Context( Display* display, Window window, XVisualInfo* vi );
             GLXContext _context;

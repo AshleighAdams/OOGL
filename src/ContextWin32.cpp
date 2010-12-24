@@ -42,9 +42,9 @@
 
 namespace GL
 {
-	Context::Context( void* window )
+	Context::Context( HWND window )
 	{
-		HDC dc = GetDC( (HWND)window );
+		HDC dc = GetDC( window );
 
 		// Choose appropriate pixel format
 		PIXELFORMATDESCRIPTOR pfd;
@@ -65,7 +65,7 @@ namespace GL
 
 		// Set the initial viewport
 		RECT dimensions;
-		GetWindowRect( (HWND)window, &dimensions );
+		GetWindowRect( window, &dimensions );
 		glViewport( 0, 0, dimensions.right - dimensions.left, dimensions.bottom - dimensions.top );
 
 		_context = context;

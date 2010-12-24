@@ -86,9 +86,8 @@ namespace GL
 		Context _context;
 
 		#if defined( _WIN32 )
-            /// TODO: Rename
-            HWND _handle;
-            HDC _handle2;
+            HWND _window;
+            HDC _device;
 
 			static LRESULT CALLBACK WindowEvent( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 			LRESULT Event( UINT msg, WPARAM wParam, LPARAM lParam );
