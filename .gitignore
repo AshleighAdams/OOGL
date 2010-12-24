@@ -7,3 +7,4 @@
 *.opensdf
 build/vc2010/ipch/*
 temp/*
+bin/*
