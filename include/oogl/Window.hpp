@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
-// 
+//
 // Copyright (c) 2010, Alexander Overvoorde. All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 // 1. Redistributions of source code must retain the above copyright
@@ -15,7 +15,7 @@
 // 4. Neither the name of Overv Projects nor the
 // 	names of its contributors may be used to endorse or promote products
 // 	derived from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY ALEXANDER OVERVOORDE ''AS IS'' AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -26,7 +26,7 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 ////////////////////////////////////////////////////////////
 
 #pragma once
@@ -41,8 +41,11 @@
 #include <oogl/WindowFlags.hpp>
 #include <oogl/Context.hpp>
 
-#ifdef _WIN32
+#if defined( _WIN32 )
 	#include <windows.h>
+#elif defined( __linux__ )
+    #include <GL/glx.h>
+    #include <X11/X.h>
 #endif
 
 namespace GL
@@ -75,19 +78,23 @@ namespace GL
 		void Center();
 
 		Context& GetContext();
-		
+
 		void Present();
-		
+
 	private:
-		void* _handle;
-		void* _handle2;
-		
 		bool _open;
 		Context _context;
 
-		#ifdef _WIN32
+		#if defined( _WIN32 )
+            /// TODO: Rename
+            HWND _handle;
+            HDC _handle2;
+
 			static LRESULT CALLBACK WindowEvent( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 			LRESULT Event( UINT msg, WPARAM wParam, LPARAM lParam );
+        #elif defined( __linux__ )
+            Display* _display;
+            ::Window _window;
 		#endif
 	};
 }

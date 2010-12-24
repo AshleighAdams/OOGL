@@ -29,21 +29,28 @@
 //
 ////////////////////////////////////////////////////////////
 
+#ifdef __linux__
+
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <oogl/Window.hpp>
+#include <oogl/Context.hpp>
+
+#include <GL/glx.h>
+#include <GL/gl.h>
+
+#include <X11/X.h>
 
 namespace GL
 {
-	bool Window::IsOpen()
+	Context::Context( Display* display, Window window, XVisualInfo* vi )
 	{
-		return _open;
-	}
+        GLXContext context = glXCreateContext( display, vi, None, true );
+        glXMakeCurrent( display, window, context );
 
-	Context& Window::GetContext()
-	{
-		return _context;
+		_context = context;
 	}
 }
+
+#endif

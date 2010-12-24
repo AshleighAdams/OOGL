@@ -15,9 +15,9 @@ int main()
 	while ( window.IsOpen() )
 	{
 		window.GetEvents();
-		
+
 		gl.Clear( GL::Buffer::Color );
-		
+
 		window.Present();
 	}
 

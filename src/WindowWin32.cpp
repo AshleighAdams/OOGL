@@ -146,11 +146,6 @@ namespace GL
 		SetWindowPos( (HWND)_handle, 0, desktop.right / 2 - window.right / 2, desktop.bottom / 2 - window.bottom / 2, 0, 0, SWP_NOZORDER | SWP_NOSIZE );
 	}
 
-	Context& Window::GetContext()
-	{
-		return _context;
-	}
-
 	void Window::Present()
 	{
 		SwapBuffers( (HDC)_handle2 );

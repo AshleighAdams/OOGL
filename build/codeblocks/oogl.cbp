@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="liboogl" prefix_auto="1" extension_auto="1" />
+				<Option output="../../bin/liboogl-d" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj/Debug/" />
+				<Option object_output="../../temp/debug" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -19,9 +19,9 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="liboogl" prefix_auto="1" extension_auto="1" />
+				<Option output="../../bin/liboogl" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj/Release/" />
+				<Option object_output="../../temp/release" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -34,9 +34,17 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Compiler>
+			<Add directory="../../include" />
+		</Compiler>
+		<Unit filename="../../include/oogl/Buffer.hpp" />
+		<Unit filename="../../include/oogl/Context.hpp" />
+		<Unit filename="../../include/oogl/Window.hpp" />
+		<Unit filename="../../include/oogl/WindowFlags.hpp" />
+		<Unit filename="../../src/Context.cpp" />
+		<Unit filename="../../src/ContextX11.cpp" />
+		<Unit filename="../../src/Window.cpp" />
+		<Unit filename="../../src/WindowX11.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1293153841 source:/home/overv/OOGL/samples/simplewindow/simplewindow.cpp
+	<oogl/Window.hpp>
+	<oogl/Context.hpp>
+
+1293153683 /home/overv/OOGL/include/oogl/Window.hpp
+	<oogl/WindowFlags.hpp>
+	<oogl/Context.hpp>
+	<windows.h>
+	<GL/glx.h>
+	<X11/X.h>
+
+1293148088 /home/overv/OOGL/include/oogl/WindowFlags.hpp
+
+1293153812 /home/overv/OOGL/include/oogl/Context.hpp
+	<oogl/Buffer.hpp>
+	<windows.h>
+	<GL/glx.h>
+	<X11/X.h>
+
+1293148088 /home/overv/OOGL/include/oogl/Buffer.hpp
+

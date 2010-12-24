@@ -1,3 +1,4 @@
+
 ////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2010, Alexander Overvoorde. All rights reserved.
@@ -29,21 +30,54 @@
 //
 ////////////////////////////////////////////////////////////
 
+#ifdef __linux__
+
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
 #include <oogl/Window.hpp>
+#include <stdlib.h>
 
 namespace GL
 {
-	bool Window::IsOpen()
-	{
-		return _open;
-	}
+    Window::Window( unsigned int width, unsigned int height, int x, int y, const char* title, unsigned int flags )
+    {
+        // Create the window
+        _display = XOpenDisplay( NULL );
 
-	Context& Window::GetContext()
-	{
-		return _context;
-	}
+        int doubleBuffered[]  = { GLX_RGBA, GLX_DEPTH_SIZE, 16, GLX_DOUBLEBUFFER, None };
+        XVisualInfo* vi = glXChooseVisual( _display, DefaultScreen( _display ), doubleBuffered );
+
+        Colormap cmap = XCreateColormap( _display, RootWindow( _display, vi->screen ), vi->visual, AllocNone );
+        XSetWindowAttributes swa;
+        swa.colormap = cmap;
+        swa.border_pixel = 0;
+        swa.event_mask = KeyPressMask | ExposureMask | ButtonPressMask | StructureNotifyMask;
+
+        _window = XCreateWindow( _display, RootWindow( _display, vi->screen ), x, y, width, height, 0, vi->depth, InputOutput, vi->visual, CWBorderPixel | CWColormap | CWEventMask, &swa );
+        XSetStandardProperties( _display, _window, title, "OpenGLWindow", None, 0, 0, NULL );
+
+        XMapWindow( _display, _window );
+
+        // Create the OpenGL context
+        _context = Context( _display, _window, vi );
+    }
+
+    void Window::GetEvents()
+    {
+        XEvent event;
+
+        while ( XPending( _display ) )
+        {
+            XNextEvent( _display, &event );
+        }
+    }
+
+    void Window::Present()
+    {
+        glXSwapBuffers( _display, _window );
+    }
 }
+
+#endif
