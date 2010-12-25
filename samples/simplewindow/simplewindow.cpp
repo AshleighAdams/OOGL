@@ -4,6 +4,7 @@
 
 #include <oogl/Window.hpp>
 #include <oogl/Context.hpp>
+#include <cstdio>
 
 int main()
 {

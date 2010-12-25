@@ -6,5 +6,6 @@
 *.pdb
 *.opensdf
 build/vc2010/ipch/*
+samples/bin/*
 temp/*
 bin/*

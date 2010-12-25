@@ -59,7 +59,7 @@ namespace GL
 		windowSize.top = 0;
 		windowSize.right = width;
 		windowSize.bottom = height;
-		AdjustWindowRect( &windowSize, WS_POPUPWINDOW | WS_CAPTION, false );
+		AdjustWindowRect( &windowSize, WS_POPUPWINDOW | ( flags & WindowFlags::Caption ? WS_CAPTION : 0 ), false );
 
 		DWORD style = WS_POPUPWINDOW | WS_MINIMIZEBOX;
 		if ( flags & WindowFlags::Caption ) style |= WS_CAPTION;
@@ -69,15 +69,15 @@ namespace GL
 		HDC dc = GetDC( window );
 		ShowWindow( window, flags & WindowFlags::Hidden ? SW_HIDE : ( flags & WindowFlags::Minimized ? SW_MINIMIZE : ( flags & WindowFlags::Maximized ? SW_MAXIMIZE : SW_SHOWNORMAL ) ) );
 		UpdateWindow( window );
-		
-		if ( flags & WindowFlags::CenterScreen )
-			Center();
 
 		_open = true;
 		_width = width;
-	        _height = height;
+	    _height = height;
 		_x = x;
 		_y = y;
+
+		if ( flags & WindowFlags::CenterScreen )
+			Center();
 
 		// Create the OpenGL context
 		_context = Context( _window );
@@ -114,20 +114,6 @@ namespace GL
 		ShowWindow( _window, visible ? SW_NORMAL : SW_HIDE );
 	}
 
-	int Window::GetX()
-	{
-		RECT dimensions;
-		GetWindowRect( _window, &dimensions );
-		return dimensions.left;
-	}
-
-	int Window::GetY()
-	{
-		RECT dimensions;
-		GetWindowRect( _window, &dimensions );
-		return dimensions.top;
-	}
-
 	void Window::Center()
 	{
 		RECT desktop, window;
@@ -155,8 +141,10 @@ namespace GL
 				break;
 
 			case WM_MOVE:
-				_x = LOWORD( lParam );
-				_y = HIWORD( lParam );
+				RECT dimensions;
+				GetWindowRect( _window, &dimensions );
+				_x = dimensions.left;
+				_y = dimensions.top;
 
 			default:
 				return DefWindowProc( _window, msg, wParam, lParam );
