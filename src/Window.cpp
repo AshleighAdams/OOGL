@@ -42,6 +42,26 @@ namespace GL
 		return _open;
 	}
 
+	unsigned int Window::GetWidth()
+	{
+        return _width;
+	}
+
+	unsigned int Window::GetHeight()
+	{
+	    return _height;
+	}
+
+	int Window::GetX()
+	{
+        return _x;
+	}
+
+	int Window::GetY()
+	{
+        return _y;
+	}
+
 	Context& Window::GetContext()
 	{
 		return _context;

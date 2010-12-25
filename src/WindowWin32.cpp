@@ -74,6 +74,10 @@ namespace GL
 			Center();
 
 		_open = true;
+		_width = width;
+	        _height = height;
+		_x = x;
+		_y = y;
 
 		// Create the OpenGL context
 		_context = Context( _window );
@@ -110,20 +114,6 @@ namespace GL
 		ShowWindow( _window, visible ? SW_NORMAL : SW_HIDE );
 	}
 
-	unsigned int Window::GetWidth()
-	{
-		RECT dimensions;
-		GetWindowRect( _window, &dimensions );
-		return dimensions.right - dimensions.left;
-	}
-
-	unsigned int Window::GetHeight()
-	{
-		RECT dimensions;
-		GetWindowRect( _window, &dimensions );
-		return dimensions.bottom - dimensions.top;
-	}
-
 	int Window::GetX()
 	{
 		RECT dimensions;
@@ -155,12 +145,21 @@ namespace GL
 	{
 		switch ( msg )
 		{
-		case WM_DESTROY:
-			_open = false;
-			break;
+			case WM_DESTROY:
+				_open = false;
+				break;
+		
+			case WM_SIZE:
+				_width = LOWORD( lParam );
+				_height = HIWORD( lParam );
+				break;
 
-		default:
-			return DefWindowProc( _window, msg, wParam, lParam );
+			case WM_MOVE:
+				_x = LOWORD( lParam );
+				_y = HIWORD( lParam );
+
+			default:
+				return DefWindowProc( _window, msg, wParam, lParam );
 		}
 
 		return 0;

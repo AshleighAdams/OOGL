@@ -82,7 +82,10 @@ namespace GL
 		void Present();
 
 	private:
-		bool _open;
+        bool _open;
+		unsigned int _width, _height;
+		int _x, _y;
+
 		Context _context;
 
 		#if defined( _WIN32 )

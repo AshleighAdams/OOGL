@@ -53,15 +53,88 @@ namespace GL
         XSetWindowAttributes swa;
         swa.colormap = cmap;
         swa.border_pixel = 0;
-        swa.event_mask = KeyPressMask | ExposureMask | ButtonPressMask | StructureNotifyMask;
+        swa.event_mask = ConfigureNotify | KeyPressMask | ExposureMask | ButtonPressMask | StructureNotifyMask;
 
         _window = XCreateWindow( _display, RootWindow( _display, vi->screen ), x, y, width, height, 0, vi->depth, InputOutput, vi->visual, CWBorderPixel | CWColormap | CWEventMask, &swa );
         XSetStandardProperties( _display, _window, title, "OpenGLWindow", None, 0, 0, NULL );
-
         XMapWindow( _display, _window );
+        XFlush( _display );
+
+        _open = true;
+        _width = width;
+        _height = height;
+        _x = x;
+        _y = y;
 
         // Create the OpenGL context
         _context = Context( _display, _window, vi );
+
+        // Set additional window properties
+        if ( flags & WindowFlags::CenterScreen )
+			Center();
+        if ( flags & WindowFlags::Hidden )
+            SetVisible( false );
+
+        // Way too long code to set window caption and resize settings
+        if ( !( flags & WindowFlags::Sizable ) || !( flags & WindowFlags::Caption ) )
+        {
+            Atom hintsAtom = XInternAtom( _display, "_MOTIF_WM_HINTS", false );
+            if ( hintsAtom )
+            {
+                static const unsigned long MWM_HINTS_FUNCTIONS = 1;
+                static const unsigned long MWM_HINTS_DECORATIONS = 1 << 1;
+
+                static const unsigned long MWM_DECOR_BORDER = 1 << 1;
+                static const unsigned long MWM_DECOR_RESIZEH = 1 << 2;
+                static const unsigned long MWM_DECOR_TITLE = 1 << 3;
+                static const unsigned long MWM_DECOR_MENU = 1 << 4;
+                static const unsigned long MWM_DECOR_MINIMIZE = 1 << 5;
+                static const unsigned long MWM_DECOR_MAXIMIZE = 1 << 6;
+
+                static const unsigned long MWM_FUNC_RESIZE = 1 << 1;
+                static const unsigned long MWM_FUNC_MOVE = 1 << 2;
+                static const unsigned long MWM_FUNC_MINIMIZE = 1 << 3;
+                static const unsigned long MWM_FUNC_MAXIMIZE = 1 << 4;
+                static const unsigned long MWM_FUNC_CLOSE  = 1 << 5;
+
+                struct WindowHints
+                {
+                    unsigned long flags;
+                    unsigned long functions;
+                    unsigned long decorations;
+                    long inputMode;
+                    unsigned long state;
+                };
+
+                WindowHints hints;
+                hints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
+                hints.decorations = 0;
+                hints.functions = MWM_FUNC_CLOSE;
+
+                if ( flags & WindowFlags::Sizable )
+                {
+                    hints.decorations |= MWM_DECOR_MAXIMIZE | MWM_DECOR_RESIZEH;
+                    hints.functions |= MWM_FUNC_MAXIMIZE | MWM_FUNC_RESIZE;
+                }
+                if ( flags & WindowFlags::Caption )
+                {
+                    hints.decorations |= MWM_DECOR_BORDER | MWM_DECOR_TITLE | MWM_DECOR_MINIMIZE | MWM_DECOR_MENU;
+                    hints.functions |= MWM_FUNC_MOVE | MWM_FUNC_MINIMIZE;
+                }
+
+                const unsigned char* hintPtr = reinterpret_cast<const unsigned char*>( &hints );
+                XChangeProperty( _display, _window, hintsAtom, hintsAtom, 32, PropModeReplace, hintPtr, 5 );
+            }
+
+            // Resize hack for some window systems
+            XSizeHints sizeHints;
+            sizeHints.flags = PMinSize | PMaxSize;
+            sizeHints.min_width = sizeHints.max_width = width;
+            sizeHints.min_height = sizeHints.max_height = height;
+            XSetWMNormalHints( _display, _window, &sizeHints );
+
+            XFlush( _display );
+        }
     }
 
     void Window::GetEvents()
@@ -71,7 +144,49 @@ namespace GL
         while ( XPending( _display ) )
         {
             XNextEvent( _display, &event );
+
+            switch ( event.type )
+            {
+                case ConfigureNotify:
+                    _width = event.xconfigure.width;
+                    _height = event.xconfigure.height;
+                    _x = event.xconfigure.x;
+                    _y = event.xconfigure.y;
+                    break;
+            }
         }
+    }
+
+    void Window::SetTitle( const char* title )
+    {
+        XStoreName( _display, _window, title );
+    }
+
+    void Window::SetPosition( int x, int y )
+    {
+        XMoveWindow( _display, _window, x, y );
+        XFlush( _display );
+    }
+
+    void Window::SetSize( unsigned int width, unsigned int height )
+    {
+        XResizeWindow( _display, _window, width, height );
+        XFlush( _display );
+    }
+
+    void Window::SetVisible( bool visible )
+    {
+        if ( visible )
+            XMapWindow( _display, _window );
+        else
+            XUnmapWindow( _display, _window );
+
+        XFlush( _display );
+    }
+
+    void Window::Center()
+    {
+        SetPosition( XDisplayWidth( _display, 0 ) / 2 - _width / 2, XDisplayHeight( _display, 0 ) / 2 - _height / 2 );
     }
 
     void Window::Present()
