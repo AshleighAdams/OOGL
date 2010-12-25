@@ -2,13 +2,12 @@ OOGL Source Repository
 
 OOGL is a collection of helper classes that aid in using non-deprecated OpenGL from C++.
 By using the library appropriately, it is possible to compile the same application on Windows,
-Linux, Mac OS X and Android using the NDK.
+Linux and Mac OS X.
 
-The following classes exist in the GL namespace and can be used to render OpenGL (ES) scenes.
+The following classes exist in the GL namespace and can be used to render OpenGL scenes.
 
 - Window
 - Context
-- Color
 
 Files are included to build the library with Visual C++ 2008, Visual C++ 2010, Code::Blocks
 and plain g++. Samples are included to function as unit tests and usage examples.
