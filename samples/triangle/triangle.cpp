@@ -7,7 +7,7 @@
 
 int main()
 {
-	GL::Window window( 800, 600, 0, 0, "OpenGL Window", GL::WindowFlags::Caption | GL::WindowFlags::CenterScreen );
+	GL::Window window( 800, 600, 0, 0, "OpenGL Triangle", GL::WindowFlags::Caption | GL::WindowFlags::CenterScreen );
 	GL::Context& gl = window.GetContext();
 
 	gl.ClearColor( 0.0f, 0.0f, 0.0f );

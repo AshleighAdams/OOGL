@@ -154,7 +154,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\src\Context.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ContextWin32.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Window.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\WindowWin32.cpp"
 				>
 			</File>
 		</Filter>
@@ -163,6 +175,14 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\include\oogl\Buffer.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\oogl\Context.hpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\include\oogl\Window.hpp"
 				>

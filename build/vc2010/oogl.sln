@@ -8,6 +8,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simplewindow", "..\..\sampl
 		{79DE5793-21FD-41EB-B036-E4776E842531} = {79DE5793-21FD-41EB-B036-E4776E842531}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "triangle", "..\..\samples\build\vc2010\triangle.vcxproj", "{34CC5B1A-D420-47A7-8084-DACE2E0CA551}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,6 +24,10 @@ Global
 		{493BDA8E-D365-4633-B767-5088B5425844}.Debug|Win32.Build.0 = Debug|Win32
 		{493BDA8E-D365-4633-B767-5088B5425844}.Release|Win32.ActiveCfg = Release|Win32
 		{493BDA8E-D365-4633-B767-5088B5425844}.Release|Win32.Build.0 = Release|Win32
+		{34CC5B1A-D420-47A7-8084-DACE2E0CA551}.Debug|Win32.ActiveCfg = Debug|Win32
+		{34CC5B1A-D420-47A7-8084-DACE2E0CA551}.Debug|Win32.Build.0 = Debug|Win32
+		{34CC5B1A-D420-47A7-8084-DACE2E0CA551}.Release|Win32.ActiveCfg = Release|Win32
+		{34CC5B1A-D420-47A7-8084-DACE2E0CA551}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

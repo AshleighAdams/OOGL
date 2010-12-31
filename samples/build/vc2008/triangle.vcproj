@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="simplewindow"
-	ProjectGUID="{F0AD7199-C1D8-4FF9-9D38-709206498AEE}"
-	RootNamespace="window"
+	Name="triangle"
+	ProjectGUID="{3ACE54CC-314D-40F3-A825-61A35FCEEA53}"
+	RootNamespace="triangle"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)..\..\samples\bin"
 			IntermediateDirectory="$(SolutionDir)..\..\temp"
 			ConfigurationType="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -96,7 +96,7 @@
 			OutputDirectory="$(SolutionDir)..\..\samples\bin"
 			IntermediateDirectory="$(SolutionDir)..\..\temp"
 			ConfigurationType="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -178,7 +178,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\simplewindow\simplewindow.cpp"
+				RelativePath="..\..\triangle\triangle.cpp"
 				>
 			</File>
 		</Filter>
