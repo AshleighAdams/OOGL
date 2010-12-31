@@ -35,14 +35,6 @@
 
 #include <oogl/Context.hpp>
 
-#if defined( _WIN32 )
-	#include <windows.h>
-	#include <gl/gl.h>
-#elif defined( __linux__ )
-    #include <GL/glx.h>
-    #include <GL/gl.h>
-#endif
-
 namespace GL
 {
 	void Context::ClearColor( float r, float g, float b, float a )

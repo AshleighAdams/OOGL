@@ -42,6 +42,7 @@
 
 #if defined( _WIN32 )
 	#include <windows.h>
+	#include <gl/gl.h>
 #elif defined( __linux__ )
     #include <GL/glx.h>
     #include <X11/X.h>

@@ -11,7 +11,7 @@ int main()
 	GL::Window window( 800, 600, 0, 0, "OpenGL Window", GL::WindowFlags::Caption | GL::WindowFlags::CenterScreen );
 	GL::Context& gl = window.GetContext();
 
-	gl.ClearColor( 1.0f, 0.0f, 0.0f );
+	gl.ClearColor( 0.0f, 0.0f, 0.0f );
 
 	while ( window.IsOpen() )
 	{
