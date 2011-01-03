@@ -2,7 +2,10 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="oogl">
 		<Project filename="oogl.cbp" />
-		<Project filename="../../samples/build/codeblocks/simplewindow.cbp" active="1">
+		<Project filename="../../samples/build/codeblocks/simplewindow.cbp">
+			<Depends filename="oogl.cbp" />
+		</Project>
+		<Project filename="../../samples/build/codeblocks/triangle.cbp" active="1">
 			<Depends filename="oogl.cbp" />
 		</Project>
 	</Workspace>

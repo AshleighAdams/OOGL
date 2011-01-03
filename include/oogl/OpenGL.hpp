@@ -67,12 +67,17 @@ namespace GL
 		// Extension prototypes
 		////////////////////////////////////////////////////////////
 
+		#define __stdcall
+
 		typedef GLuint ( __stdcall * GLCREATESHADERPROC ) ( GLenum type );
 		typedef void ( __stdcall * GLDELETESHADERPROC ) ( GLuint shader );
 
 		////////////////////////////////////////////////////////////
 		// Extension values
 		////////////////////////////////////////////////////////////
+
+		#undef GL_FRAGMENT_SHADER
+		#undef GL_VERTEX_SHADER
 
 		const unsigned int GL_FRAGMENT_SHADER = 0x8B30;
 		const unsigned int GL_VERTEX_SHADER = 0x8B31;

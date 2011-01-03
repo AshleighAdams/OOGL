@@ -37,12 +37,13 @@
 		<Compiler>
 			<Add directory="../../include" />
 		</Compiler>
-		<Unit filename="../../include/oogl/Buffer.hpp" />
 		<Unit filename="../../include/oogl/Context.hpp" />
+		<Unit filename="../../include/oogl/OpenGL.hpp" />
+		<Unit filename="../../include/oogl/Shader.hpp" />
 		<Unit filename="../../include/oogl/Window.hpp" />
-		<Unit filename="../../include/oogl/WindowFlags.hpp" />
 		<Unit filename="../../src/Context.cpp" />
 		<Unit filename="../../src/ContextX11.cpp" />
+		<Unit filename="../../src/Shader.cpp" />
 		<Unit filename="../../src/Window.cpp" />
 		<Unit filename="../../src/WindowX11.cpp" />
 		<Extensions>
