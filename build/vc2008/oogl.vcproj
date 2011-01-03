@@ -162,6 +162,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\Shader.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Window.cpp"
 				>
 			</File>
@@ -184,11 +188,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\oogl\Window.hpp"
+				RelativePath="..\..\include\oogl\Shader.hpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\oogl\WindowFlags.hpp"
+				RelativePath="..\..\include\oogl\Window.hpp"
 				>
 			</File>
 		</Filter>
