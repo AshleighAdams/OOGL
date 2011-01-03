@@ -3,7 +3,6 @@
 ////////////////////////////////////////////////////////////
 
 #include <oogl/Window.hpp>
-#include <oogl/Context.hpp>
 
 int main()
 {

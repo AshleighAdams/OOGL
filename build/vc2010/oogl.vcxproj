@@ -11,14 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\oogl\Buffer.hpp" />
     <ClInclude Include="..\..\include\oogl\Context.hpp" />
+    <ClInclude Include="..\..\include\oogl\OpenGL.hpp" />
+    <ClInclude Include="..\..\include\oogl\Shader.hpp" />
     <ClInclude Include="..\..\include\oogl\Window.hpp" />
-    <ClInclude Include="..\..\include\oogl\WindowFlags.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Context.cpp" />
     <ClCompile Include="..\..\src\ContextWin32.cpp" />
+    <ClCompile Include="..\..\src\Shader.cpp" />
     <ClCompile Include="..\..\src\Window.cpp" />
     <ClCompile Include="..\..\src\WindowWin32.cpp" />
   </ItemGroup>

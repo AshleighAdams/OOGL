@@ -31,82 +31,47 @@
 
 #pragma once
 
-#ifndef OOGL_WINDOW_HPP
-#define OOGL_WINDOW_HPP
+#ifndef OOGL_SHADER_HPP
+#define OOGL_SHADER_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <oogl/Context.hpp>
+#include <oogl/OpenGL.hpp>
 
 namespace GL
 {
 	////////////////////////////////////////////////////////////
-	// Enumeration of window properties.
+	// Enumeration of OpenGL shader types.
 	////////////////////////////////////////////////////////////
 
-	namespace WindowFlags
+	namespace ShaderType
 	{
 		enum
 		{
-			CenterScreen = 1,
-			Minimized = 1 << 1,
-			Maximized = 1 << 2,
-			Caption = 1 << 3,
-			Sizable = 1 << 4,
-			Hidden = 1 << 5
+			Fragment = Extensions::GL_FRAGMENT_SHADER,
+			Vertex = Extensions::GL_VERTEX_SHADER
 		};
 	}
 
 	////////////////////////////////////////////////////////////
-	// Render window.
+	// OpenGL shader
 	////////////////////////////////////////////////////////////
 
-	class Window
+	class Shader
 	{
 	public:
-		Window( unsigned int width, unsigned int height, int x, int y, const char* title, unsigned int flags = WindowFlags::Caption );
+		Shader( unsigned int type );
+		~Shader();
 
-		bool IsOpen();
-
-		void GetEvents();
-
-		void SetTitle( const char* title );
-		void SetPosition( int x, int y );
-		void SetSize( unsigned int width, unsigned int height );
-
-		void SetVisible( bool visible );
-
-		unsigned int GetWidth();
-		unsigned int GetHeight();
-
-		int GetX();
-		int GetY();
-
-		void Center();
-
-		Context& GetContext();
-
-		void Present();
+		unsigned int GetIdentifier();
 
 	private:
-        bool _open;
-		unsigned int _width, _height;
-		int _x, _y;
+		unsigned int _identifier;
 
-		Context _context;
-
-		#if defined( _WIN32 )
-            HWND _window;
-            HDC _device;
-
-			static LRESULT CALLBACK WindowEvent( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
-			LRESULT Event( UINT msg, WPARAM wParam, LPARAM lParam );
-        #elif defined( __linux__ )
-            Display* _display;
-            ::Window _window;
-		#endif
+		static Extensions::GLCREATESHADERPROC glCreateShader;
+		static Extensions::GLDELETESHADERPROC glDeleteShader;
 	};
 }
 

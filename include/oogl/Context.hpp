@@ -38,18 +38,25 @@
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <oogl/Buffer.hpp>
-
-#if defined( _WIN32 )
-	#include <windows.h>
-	#include <gl/gl.h>
-#elif defined( __linux__ )
-    #include <GL/glx.h>
-    #include <X11/X.h>
-#endif
+#include <oogl/OpenGL.hpp>
+#include <oogl/Shader.hpp>
 
 namespace GL
 {
+	////////////////////////////////////////////////////////////
+	// Enumeration of OpenGL buffers.
+	////////////////////////////////////////////////////////////
+
+	namespace Buffer
+	{
+		enum
+		{
+			Color = 1,
+			Depth = 1 << 1,
+			Stencil = 1 << 2
+		};
+	}
+
 	////////////////////////////////////////////////////////////
 	// OpenGL context
 	////////////////////////////////////////////////////////////

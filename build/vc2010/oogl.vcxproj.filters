@@ -18,13 +18,13 @@
     <ClInclude Include="..\..\include\oogl\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\oogl\WindowFlags.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\oogl\Context.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\oogl\Buffer.hpp">
+    <ClInclude Include="..\..\include\oogl\Shader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\oogl\OpenGL.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -39,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ContextWin32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

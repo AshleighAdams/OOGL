@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
-// 
+//
 // Copyright (c) 2010, Alexander Overvoorde. All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 // 1. Redistributions of source code must retain the above copyright
@@ -15,7 +15,7 @@
 // 4. Neither the name of Overv Projects nor the
 // 	names of its contributors may be used to endorse or promote products
 // 	derived from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY ALEXANDER OVERVOORDE ''AS IS'' AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -26,32 +26,38 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 ////////////////////////////////////////////////////////////
 
-#pragma once
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
 
-#ifndef OOGL_WINDOWFLAGS_HPP
-#define OOGL_WINDOWFLAGS_HPP
+#include <oogl/Shader.hpp>
 
 namespace GL
 {
-	////////////////////////////////////////////////////////////
-	// Enumeration of window properties.
-	////////////////////////////////////////////////////////////
+	Extensions::GLCREATESHADERPROC Shader::glCreateShader = 0;
+	Extensions::GLDELETESHADERPROC Shader::glDeleteShader = 0;
 
-	namespace WindowFlags
+	Shader::Shader( unsigned int type )
 	{
-		enum
+		if ( !glCreateShader )
 		{
-			CenterScreen = 1,
-			Minimized = 1 << 1,
-			Maximized = 1 << 2,
-			Caption = 1 << 3,
-			Sizable = 1 << 4,
-			Hidden = 1 << 5
-		};
+			glCreateShader = (Extensions::GLCREATESHADERPROC)Extensions::GetProcedure( "glCreateShader" );
+			glDeleteShader = (Extensions::GLDELETESHADERPROC)Extensions::GetProcedure( "glDeleteShader" );
+		}
+
+		_identifier = glCreateShader( type );
+	}
+
+	Shader::~Shader()
+	{
+		glDeleteShader( _identifier );
+	}
+
+	unsigned int Shader::GetIdentifier()
+	{
+		return _identifier;
 	}
 }
-
-#endif
