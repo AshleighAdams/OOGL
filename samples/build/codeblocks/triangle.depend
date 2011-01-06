@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1294273216 source:/home/overv/OOGL/samples/triangle/triangle.cpp
+	<oogl/Window.hpp>
+	<iostream>
+
+1294273216 /home/overv/OOGL/include/oogl/Window.hpp
+	<oogl/Context.hpp>
+
+1294273216 /home/overv/OOGL/include/oogl/Context.hpp
+	<oogl/OpenGL.hpp>
+	<oogl/Shader.hpp>
+
+1294273216 /home/overv/OOGL/include/oogl/OpenGL.hpp
+	<windows.h>
+	<gl/gl.h>
+	<GL/glx.h>
+	<X11/X.h>
+
+1294273589 /home/overv/OOGL/include/oogl/Shader.hpp
+	<oogl/OpenGL.hpp>
+	<exception>
+	<string>
+

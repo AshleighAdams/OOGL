@@ -65,6 +65,8 @@ namespace GL
 	{
 	public:
 		ShaderCompileException( const char* error ) { _error = std::string( error ); }
+		~ShaderCompileException() throw() {};
+
 		const char* what() const throw() { return _error.c_str(); }
 
 	private:
@@ -82,7 +84,7 @@ namespace GL
 		~Shader();
 
 		void Source( const char* code );
-		
+
 		void Compile();
 
 		unsigned int GetIdentifier();
