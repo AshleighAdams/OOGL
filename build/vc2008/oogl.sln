@@ -9,6 +9,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simplewindow", "..\..\sampl
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "triangle", "..\..\samples\build\vc2008\triangle.vcproj", "{3ACE54CC-314D-40F3-A825-61A35FCEEA53}"
+	ProjectSection(ProjectDependencies) = postProject
+		{35EF7046-5983-4C42-A007-0109D722CADF} = {35EF7046-5983-4C42-A007-0109D722CADF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

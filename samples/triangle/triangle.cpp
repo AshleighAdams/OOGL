@@ -11,7 +11,12 @@ int main()
 	GL::Context& gl = window.GetContext();
 
 	GL::Shader shader( GL::ShaderType::Fragment );
-	std::cout << "Shader #: " << shader.GetIdentifier() << std::endl;
+	shader.Source( "void main() { " );
+	try {
+		shader.Compile();
+	} catch ( GL::ShaderCompileException& e ) {
+		std::cerr << "Shader compilation failed:" << std::endl << e.what() << std::endl;
+	}
 
 	gl.ClearColor( 0.0f, 0.0f, 0.0f );
 

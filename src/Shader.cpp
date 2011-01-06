@@ -39,6 +39,10 @@ namespace GL
 {
 	Extensions::GLCREATESHADERPROC Shader::glCreateShader = 0;
 	Extensions::GLDELETESHADERPROC Shader::glDeleteShader = 0;
+	Extensions::GLSHADERSOURCEPROC Shader::glShaderSource = 0;
+	Extensions::GLCOMPILESHADERPROC Shader::glCompileShader = 0;
+	Extensions::GLGETSHADERPROC Shader::glGetShaderiv = 0;
+	Extensions::GLGETSHADERINFOLOGPROC Shader::glGetShaderInfoLog = 0;
 
 	Shader::Shader( unsigned int type )
 	{
@@ -46,6 +50,10 @@ namespace GL
 		{
 			glCreateShader = (Extensions::GLCREATESHADERPROC)Extensions::GetProcedure( "glCreateShader" );
 			glDeleteShader = (Extensions::GLDELETESHADERPROC)Extensions::GetProcedure( "glDeleteShader" );
+			glShaderSource = (Extensions::GLSHADERSOURCEPROC)Extensions::GetProcedure( "glShaderSource" );
+			glCompileShader = (Extensions::GLCOMPILESHADERPROC)Extensions::GetProcedure( "glCompileShader" );
+			glGetShaderiv = (Extensions::GLGETSHADERPROC)Extensions::GetProcedure( "glGetShaderiv" );
+			glGetShaderInfoLog = (Extensions::GLGETSHADERINFOLOGPROC)Extensions::GetProcedure( "glGetShaderInfoLog" );
 		}
 
 		_identifier = glCreateShader( type );
@@ -54,6 +62,25 @@ namespace GL
 	Shader::~Shader()
 	{
 		glDeleteShader( _identifier );
+	}
+
+	void Shader::Source( const char* code )
+	{
+		glShaderSource( _identifier, 1, &code, 0 );
+	}
+
+	void Shader::Compile()
+	{
+		glCompileShader( _identifier );
+
+		int status;
+		glGetShaderiv( _identifier, Extensions::GL_COMPILE_STATUS, &status );
+		if ( status == 0 )
+		{
+			char buffer[2048];
+			glGetShaderInfoLog( _identifier, 2048, 0, buffer );
+			throw ShaderCompileException( buffer );
+		}
 	}
 
 	unsigned int Shader::GetIdentifier()

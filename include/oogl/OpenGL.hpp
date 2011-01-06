@@ -67,10 +67,18 @@ namespace GL
 		// Extension prototypes
 		////////////////////////////////////////////////////////////
 
-		#define __stdcall
+		#ifndef _WIN32
+			#define __stdcall
+		#endif
+
+		typedef char GLchar;
 
 		typedef GLuint ( __stdcall * GLCREATESHADERPROC ) ( GLenum type );
 		typedef void ( __stdcall * GLDELETESHADERPROC ) ( GLuint shader );
+		typedef void ( __stdcall * GLSHADERSOURCEPROC ) ( GLuint shader, GLsizei count, const GLchar** string, const GLint* length );
+		typedef void ( __stdcall * GLCOMPILESHADERPROC ) ( GLuint shader );
+		typedef void ( __stdcall * GLGETSHADERPROC ) ( GLuint shader, GLenum pname, GLint* params );
+		typedef void ( __stdcall * GLGETSHADERINFOLOGPROC ) ( GLuint shader, GLsizei maxLength, GLsizei* length, GLchar* infoLog );
 
 		////////////////////////////////////////////////////////////
 		// Extension values
@@ -78,9 +86,11 @@ namespace GL
 
 		#undef GL_FRAGMENT_SHADER
 		#undef GL_VERTEX_SHADER
+		#undef GL_COMPILE_STATUS
 
 		const unsigned int GL_FRAGMENT_SHADER = 0x8B30;
 		const unsigned int GL_VERTEX_SHADER = 0x8B31;
+		const unsigned int GL_COMPILE_STATUS = 0x8B81;
 	}
 }
 

@@ -39,6 +39,8 @@
 ////////////////////////////////////////////////////////////
 
 #include <oogl/OpenGL.hpp>
+#include <exception>
+#include <string>
 
 namespace GL
 {
@@ -56,6 +58,20 @@ namespace GL
 	}
 
 	////////////////////////////////////////////////////////////
+	// Shader compilation exception
+	////////////////////////////////////////////////////////////
+
+	class ShaderCompileException : public std::exception
+	{
+	public:
+		ShaderCompileException( const char* error ) { _error = std::string( error ); }
+		const char* what() const throw() { return _error.c_str(); }
+
+	private:
+		std::string _error;
+	};
+
+	////////////////////////////////////////////////////////////
 	// OpenGL shader
 	////////////////////////////////////////////////////////////
 
@@ -65,6 +81,10 @@ namespace GL
 		Shader( unsigned int type );
 		~Shader();
 
+		void Source( const char* code );
+		
+		void Compile();
+
 		unsigned int GetIdentifier();
 
 	private:
@@ -72,6 +92,10 @@ namespace GL
 
 		static Extensions::GLCREATESHADERPROC glCreateShader;
 		static Extensions::GLDELETESHADERPROC glDeleteShader;
+		static Extensions::GLSHADERSOURCEPROC glShaderSource;
+		static Extensions::GLCOMPILESHADERPROC glCompileShader;
+		static Extensions::GLGETSHADERPROC glGetShaderiv;
+		static Extensions::GLGETSHADERINFOLOGPROC glGetShaderInfoLog;
 	};
 }
 
