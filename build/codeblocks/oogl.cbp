@@ -39,10 +39,12 @@
 		</Compiler>
 		<Unit filename="../../include/oogl/Context.hpp" />
 		<Unit filename="../../include/oogl/OpenGL.hpp" />
+		<Unit filename="../../include/oogl/Program.hpp" />
 		<Unit filename="../../include/oogl/Shader.hpp" />
 		<Unit filename="../../include/oogl/Window.hpp" />
 		<Unit filename="../../src/Context.cpp" />
 		<Unit filename="../../src/ContextX11.cpp" />
+		<Unit filename="../../src/Program.cpp" />
 		<Unit filename="../../src/Shader.cpp" />
 		<Unit filename="../../src/Window.cpp" />
 		<Unit filename="../../src/WindowX11.cpp" />
