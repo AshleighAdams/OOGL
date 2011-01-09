@@ -10,12 +10,26 @@ int main()
 	GL::Window window( 800, 600, 0, 0, "OpenGL Triangle", GL::WindowFlags::Caption | GL::WindowFlags::CenterScreen );
 	GL::Context& gl = window.GetContext();
 
-	GL::Shader shader( GL::ShaderType::Fragment );
-	shader.Source( "void main() { " );
+	GL::Shader fragmentShader( GL::ShaderType::Fragment );
+	GL::Shader vertexShader( GL::ShaderType::Vertex );
+	fragmentShader.Source( "void main() {}" );
+	vertexShader.Source( "" );
 	try {
-		shader.Compile();
+		fragmentShader.Compile();
+		vertexShader.Compile();
 	} catch ( GL::ShaderCompileException& e ) {
-		std::cerr << "Shader compilation failed:" << std::endl << e.what() << std::endl;
+		std::cerr << "Shader compilation failed:" << std::endl << e.what();
+		return 1;
+	}
+
+	GL::Program program;
+	program.Attach( fragmentShader );
+	program.Attach( vertexShader );
+	try {
+		program.Link();
+	} catch ( GL::ProgramLinkException& e ) {
+		std::cerr << "Program linking failed" << std::endl << e.what();
+		return 1;
 	}
 
 	gl.ClearColor( 0.0f, 0.0f, 0.0f );

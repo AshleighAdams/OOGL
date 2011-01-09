@@ -80,6 +80,13 @@ namespace GL
 		typedef void ( __stdcall * GLGETSHADERPROC ) ( GLuint shader, GLenum pname, GLint* params );
 		typedef void ( __stdcall * GLGETSHADERINFOLOGPROC ) ( GLuint shader, GLsizei maxLength, GLsizei* length, GLchar* infoLog );
 
+		typedef GLuint ( __stdcall * GLCREATEPROGRAMPROC ) ();
+		typedef void ( __stdcall * GLDELETEPROGRAMPROC ) ( GLuint program );
+		typedef void ( __stdcall * GLATTACHSHADERPROC ) ( GLuint program, GLuint shader );
+		typedef void ( __stdcall * GLLINKPROGRAMPROC ) ( GLuint program );
+		typedef void ( __stdcall * GLGETPROGRAMPROC ) ( GLuint program, GLenum pname, GLint* params );
+		typedef void ( __stdcall * GLGETPROGRAMINFOLOGPROC ) ( GLuint program, GLsizei maxLength, GLsizei* length, GLchar* infoLog );
+
 		////////////////////////////////////////////////////////////
 		// Extension values
 		////////////////////////////////////////////////////////////
@@ -87,10 +94,12 @@ namespace GL
 		#undef GL_FRAGMENT_SHADER
 		#undef GL_VERTEX_SHADER
 		#undef GL_COMPILE_STATUS
+		#undef GL_LINK_STATUS
 
 		const unsigned int GL_FRAGMENT_SHADER = 0x8B30;
 		const unsigned int GL_VERTEX_SHADER = 0x8B31;
 		const unsigned int GL_COMPILE_STATUS = 0x8B81;
+		const unsigned int GL_LINK_STATUS = 0x8B82;
 	}
 }
 

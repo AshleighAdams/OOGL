@@ -31,8 +31,8 @@
 
 #pragma once
 
-#ifndef OOGL_CONTEXT_HPP
-#define OOGL_CONTEXT_HPP
+#ifndef OOGL_PROGRAM_HPP
+#define OOGL_PROGRAM_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
@@ -40,46 +40,52 @@
 
 #include <oogl/OpenGL.hpp>
 #include <oogl/Shader.hpp>
-#include <oogl/Program.hpp>
+#include <exception>
+#include <string>
 
 namespace GL
 {
 	////////////////////////////////////////////////////////////
-	// Enumeration of OpenGL buffers.
+	// Program linking exception
 	////////////////////////////////////////////////////////////
 
-	namespace Buffer
+	class ProgramLinkException : public std::exception
 	{
-		enum
-		{
-			Color = 1,
-			Depth = 1 << 1,
-			Stencil = 1 << 2
-		};
-	}
-
-	////////////////////////////////////////////////////////////
-	// OpenGL context
-	////////////////////////////////////////////////////////////
-
-	class Context
-	{
-	friend class Window;
-
 	public:
-		void ClearColor( float r, float g, float b, float a = 1.0f );
-		void Clear( unsigned int buffers );
+		ProgramLinkException( const char* error ) { _error = std::string( error ); }
+		~ProgramLinkException() throw() {};
+
+		const char* what() const throw() { return _error.c_str(); }
 
 	private:
-		Context() {}
+		std::string _error;
+	};
 
-		#if defined( _WIN32 )
-            Context( HWND window );
-            HGLRC _context;
-        #elif defined( __linux__ )
-            Context( Display* display, Window window, XVisualInfo* vi );
-            GLXContext _context;
-        #endif
+	////////////////////////////////////////////////////////////
+	// OpenGL shader program
+	////////////////////////////////////////////////////////////
+
+	class Program
+	{
+	public:
+		Program();
+		~Program();
+
+		void Attach( Shader& shader );
+
+		void Link();
+
+		unsigned int GetIdentifier();
+
+	private:
+		unsigned int _identifier;
+
+		static Extensions::GLCREATEPROGRAMPROC glCreateProgram;
+		static Extensions::GLDELETEPROGRAMPROC glDeleteProgram;
+		static Extensions::GLATTACHSHADERPROC glAttachShader;
+		static Extensions::GLLINKPROGRAMPROC glLinkProgram;
+		static Extensions::GLGETPROGRAMPROC glGetProgramiv;
+		static Extensions::GLGETPROGRAMINFOLOGPROC glGetProgramInfoLog;
 	};
 }
 

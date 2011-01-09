@@ -29,58 +29,62 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
-
-#ifndef OOGL_CONTEXT_HPP
-#define OOGL_CONTEXT_HPP
-
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <oogl/OpenGL.hpp>
-#include <oogl/Shader.hpp>
 #include <oogl/Program.hpp>
 
 namespace GL
 {
-	////////////////////////////////////////////////////////////
-	// Enumeration of OpenGL buffers.
-	////////////////////////////////////////////////////////////
+	Extensions::GLCREATEPROGRAMPROC Program::glCreateProgram = 0;
+	Extensions::GLDELETESHADERPROC Program::glDeleteProgram = 0;
+	Extensions::GLATTACHSHADERPROC Program::glAttachShader = 0;
+	Extensions::GLLINKPROGRAMPROC Program::glLinkProgram = 0;
+	Extensions::GLGETPROGRAMPROC Program::glGetProgramiv = 0;
+	Extensions::GLGETPROGRAMINFOLOGPROC Program::glGetProgramInfoLog = 0;
 
-	namespace Buffer
+	Program::Program()
 	{
-		enum
+		if ( !glCreateProgram )
 		{
-			Color = 1,
-			Depth = 1 << 1,
-			Stencil = 1 << 2
-		};
+			glCreateProgram = (Extensions::GLCREATEPROGRAMPROC)Extensions::GetProcedure( "glCreateProgram" );
+			glDeleteProgram = (Extensions::GLDELETESHADERPROC)Extensions::GetProcedure( "glDeleteProgram" );
+			glAttachShader = (Extensions::GLATTACHSHADERPROC)Extensions::GetProcedure( "glAttachShader" );
+			glLinkProgram = (Extensions::GLLINKPROGRAMPROC)Extensions::GetProcedure( "glLinkProgram" );
+			glGetProgramiv = (Extensions::GLGETPROGRAMPROC)Extensions::GetProcedure( "glGetProgramiv" );
+			glGetProgramInfoLog = (Extensions::GLGETPROGRAMINFOLOGPROC)Extensions::GetProcedure( "glGetProgramInfoLog" );
+		}
+
+		_identifier = glCreateProgram();
 	}
 
-	////////////////////////////////////////////////////////////
-	// OpenGL context
-	////////////////////////////////////////////////////////////
-
-	class Context
+	Program::~Program()
 	{
-	friend class Window;
+		glDeleteProgram( _identifier );
+	}
 
-	public:
-		void ClearColor( float r, float g, float b, float a = 1.0f );
-		void Clear( unsigned int buffers );
+	void Program::Attach( Shader& shader )
+	{
+		glAttachShader( _identifier, shader.GetIdentifier() );
+	}
 
-	private:
-		Context() {}
+	void Program::Link()
+	{
+		glLinkProgram( _identifier );
 
-		#if defined( _WIN32 )
-            Context( HWND window );
-            HGLRC _context;
-        #elif defined( __linux__ )
-            Context( Display* display, Window window, XVisualInfo* vi );
-            GLXContext _context;
-        #endif
-	};
+		int status;
+		glGetProgramiv( _identifier, Extensions::GL_LINK_STATUS, &status );
+		if ( status == 0 )
+		{
+			char buffer[2048];
+			glGetProgramInfoLog( _identifier, 2048, 0, buffer );
+			throw ProgramLinkException( buffer );
+		}
+	}
+
+	unsigned int Program::GetIdentifier()
+	{
+		return _identifier;
+	}
 }
-
-#endif

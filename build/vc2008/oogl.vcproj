@@ -162,6 +162,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\Program.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Shader.cpp"
 				>
 			</File>
@@ -185,6 +189,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\oogl\Context.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\oogl\Program.hpp"
 				>
 			</File>
 			<File
