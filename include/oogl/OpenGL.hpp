@@ -83,9 +83,19 @@ namespace GL
 		typedef GLuint ( __stdcall * GLCREATEPROGRAMPROC ) ();
 		typedef void ( __stdcall * GLDELETEPROGRAMPROC ) ( GLuint program );
 		typedef void ( __stdcall * GLATTACHSHADERPROC ) ( GLuint program, GLuint shader );
+		typedef void ( __stdcall * GLBINDATTRIBLOCATIONPROC ) ( GLuint program, GLuint index, const GLchar* name );
 		typedef void ( __stdcall * GLLINKPROGRAMPROC ) ( GLuint program );
 		typedef void ( __stdcall * GLGETPROGRAMPROC ) ( GLuint program, GLenum pname, GLint* params );
 		typedef void ( __stdcall * GLGETPROGRAMINFOLOGPROC ) ( GLuint program, GLsizei maxLength, GLsizei* length, GLchar* infoLog );
+		typedef void ( __stdcall * GLUSEPROGRAMPROC ) ( GLuint program );
+
+		typedef void ( __stdcall * GLGENBUFFERSPROC ) ( GLsizei n, GLuint* buffers );
+		typedef void ( __stdcall * GLDELETEBUFFERSPROC ) ( GLsizei n, GLuint* buffers );
+		typedef void ( __stdcall * GLBINDBUFFERPROC ) ( GLenum target, GLuint buffer );
+		typedef void ( __stdcall * GLBUFFERDATAPROC ) ( GLenum target, GLsizei* size, const GLvoid* data, GLenum usage );
+
+		typedef void ( __stdcall * GLVERTEXATTRIBPOINTERPROC ) ( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer );
+		typedef void ( __stdcall * GLENABLEVERTEXATTRIBARRAYPROC ) ( GLuint index );
 
 		////////////////////////////////////////////////////////////
 		// Extension values
@@ -94,12 +104,38 @@ namespace GL
 		#undef GL_FRAGMENT_SHADER
 		#undef GL_VERTEX_SHADER
 		#undef GL_COMPILE_STATUS
+
 		#undef GL_LINK_STATUS
+
+		#undef GL_STREAM_DRAW
+		#undef GL_STREAM_READ
+		#undef GL_STREAM_COPY
+		#undef GL_STATIC_DRAW
+		#undef GL_STATIC_READ
+		#undef GL_STATIC_COPY
+		#undef GL_DYNAMIC_DRAW
+		#undef GL_DYNAMIC_READ
+		#undef GL_DYNAMIC_COPY
+
+		#undef GL_ARRAY_BUFFER
 
 		const unsigned int GL_FRAGMENT_SHADER = 0x8B30;
 		const unsigned int GL_VERTEX_SHADER = 0x8B31;
 		const unsigned int GL_COMPILE_STATUS = 0x8B81;
+
 		const unsigned int GL_LINK_STATUS = 0x8B82;
+
+		const unsigned int GL_STREAM_DRAW = 0x88E0;
+		const unsigned int GL_STREAM_READ = 0x88E1;
+		const unsigned int GL_STREAM_COPY = 0x88E2;
+		const unsigned int GL_STATIC_DRAW = 0x88E4;
+		const unsigned int GL_STATIC_READ = 0x88E5;
+		const unsigned int GL_STATIC_COPY = 0x88E6;
+		const unsigned int GL_DYNAMIC_DRAW = 0x88E8;
+		const unsigned int GL_DYNAMIC_READ = 0x88E9;
+		const unsigned int GL_DYNAMIC_COPY = 0x88EA;
+
+		const unsigned int GL_ARRAY_BUFFER = 0x8892;
 	}
 }
 

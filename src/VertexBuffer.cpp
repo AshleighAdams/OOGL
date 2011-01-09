@@ -29,30 +29,41 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifdef __linux__
-
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <oogl/Context.hpp>
-
-#include <GL/glx.h>
-#include <GL/gl.h>
-
-#include <X11/X.h>
+#include <oogl/VertexBuffer.hpp>
 
 namespace GL
 {
-	Context::Context( Display* display, Window window, XVisualInfo* vi, unsigned int width, unsigned int height )
-	{
-        GLXContext context = glXCreateContext( display, vi, None, true );
-        glXMakeCurrent( display, window, context );
-		
-		glViewport( 0, 0, width, height );
+	Extensions::GLGENBUFFERSPROC VertexBuffer::glGenBuffers = 0;
+	Extensions::GLDELETEBUFFERSPROC VertexBuffer::glDeleteBuffers = 0;
+	Extensions::GLBINDBUFFERPROC VertexBuffer::glBindBuffer = 0;
+	Extensions::GLBUFFERDATAPROC VertexBuffer::glBufferData = 0;
 
-		_context = context;
+	VertexBuffer::VertexBuffer( const void* data, unsigned long size, unsigned int usage )
+	{
+		if ( !glGenBuffers )
+		{
+			glGenBuffers = (Extensions::GLGENBUFFERSPROC)Extensions::GetProcedure( "glGenBuffers" );
+			glDeleteBuffers = (Extensions::GLDELETEBUFFERSPROC)Extensions::GetProcedure( "glDeleteBuffers" );
+			glBindBuffer = (Extensions::GLBINDBUFFERPROC)Extensions::GetProcedure( "glBindBuffer" );
+			glBufferData = (Extensions::GLBUFFERDATAPROC)Extensions::GetProcedure( "glBufferData" );
+		}
+
+		glGenBuffers( 1, &_identifier );
+		glBindBuffer( Extensions::GL_ARRAY_BUFFER, _identifier );
+		glBufferData( Extensions::GL_ARRAY_BUFFER, (GLsizei*)size, data, usage );
+	}
+
+	VertexBuffer::~VertexBuffer()
+	{
+		glDeleteBuffers( 1, &_identifier );
+	}
+
+	unsigned int VertexBuffer::GetIdentifier()
+	{
+		return _identifier;
 	}
 }
-
-#endif

@@ -80,7 +80,7 @@ namespace GL
 			Center();
 
 		// Create the OpenGL context
-		_context = Context( _window );
+		_context = Context( _window, width, height );
 	}
 
 	void Window::GetEvents()

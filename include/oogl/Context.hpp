@@ -41,6 +41,7 @@
 #include <oogl/OpenGL.hpp>
 #include <oogl/Shader.hpp>
 #include <oogl/Program.hpp>
+#include <oogl/VertexBuffer.hpp>
 
 namespace GL
 {
@@ -52,9 +53,33 @@ namespace GL
 	{
 		enum
 		{
-			Color = 1,
-			Depth = 1 << 1,
-			Stencil = 1 << 2
+			Color = GL_COLOR_BUFFER_BIT,
+			Depth = GL_DEPTH_BUFFER_BIT,
+			Stencil = GL_STENCIL_BUFFER_BIT
+		};
+	}
+
+	////////////////////////////////////////////////////////////
+	// Enumeration of OpenGL types.
+	////////////////////////////////////////////////////////////
+
+	namespace Type
+	{
+		enum
+		{
+			Float = GL_FLOAT
+		};
+	}
+
+	////////////////////////////////////////////////////////////
+	// Enumeration of OpenGL primitives.
+	////////////////////////////////////////////////////////////
+
+	namespace Primitive
+	{
+		enum
+		{
+			Triangles = GL_TRIANGLES,
 		};
 	}
 
@@ -70,16 +95,24 @@ namespace GL
 		void ClearColor( float r, float g, float b, float a = 1.0f );
 		void Clear( unsigned int buffers );
 
+		void VertexAttribLocation( unsigned int index, unsigned int size, unsigned int type, unsigned int stride, const void* pointer );
+		void VertexAttribLocation( unsigned int index, unsigned int size, unsigned int type, unsigned int stride, unsigned int offset = 0 );
+		
+		void DrawArrays( unsigned int shape, unsigned int first, unsigned int count );
+
 	private:
 		Context() {}
 
 		#if defined( _WIN32 )
-            Context( HWND window );
+            Context( HWND window, unsigned int width, unsigned int height );
             HGLRC _context;
         #elif defined( __linux__ )
-            Context( Display* display, Window window, XVisualInfo* vi );
+            Context( Display* display, Window window, XVisualInfo* vi, unsigned int width, unsigned int height );
             GLXContext _context;
         #endif
+
+		static Extensions::GLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
+		static Extensions::GLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray;
 	};
 }
 

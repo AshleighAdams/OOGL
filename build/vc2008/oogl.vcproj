@@ -170,6 +170,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\VertexBuffer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\Window.cpp"
 				>
 			</File>
@@ -197,6 +201,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\oogl\Shader.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\oogl\VertexBuffer.hpp"
 				>
 			</File>
 			<File

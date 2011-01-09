@@ -42,7 +42,7 @@
 
 namespace GL
 {
-	Context::Context( HWND window )
+	Context::Context( HWND window, unsigned int width, unsigned int height )
 	{
 		HDC dc = GetDC( window );
 
@@ -64,9 +64,7 @@ namespace GL
 		wglMakeCurrent( dc, context );
 
 		// Set the initial viewport
-		RECT dimensions;
-		GetWindowRect( window, &dimensions );
-		glViewport( 0, 0, dimensions.right - dimensions.left, dimensions.bottom - dimensions.top );
+		glViewport( 0, 0, width, height );
 
 		_context = context;
 	}

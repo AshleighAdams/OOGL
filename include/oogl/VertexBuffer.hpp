@@ -29,30 +29,59 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifdef __linux__
+#pragma once
+
+#ifndef OOGL_VBO_HPP
+#define OOGL_VBO_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <oogl/Context.hpp>
-
-#include <GL/glx.h>
-#include <GL/gl.h>
-
-#include <X11/X.h>
+#include <oogl/OpenGL.hpp>
 
 namespace GL
 {
-	Context::Context( Display* display, Window window, XVisualInfo* vi, unsigned int width, unsigned int height )
-	{
-        GLXContext context = glXCreateContext( display, vi, None, true );
-        glXMakeCurrent( display, window, context );
-		
-		glViewport( 0, 0, width, height );
+	////////////////////////////////////////////////////////////
+	// Enumeration of buffer uses.
+	////////////////////////////////////////////////////////////
 
-		_context = context;
+	namespace BufferUsage
+	{
+		enum
+		{
+			StreamDraw = Extensions::GL_STREAM_DRAW,
+			StreamRead = Extensions::GL_STREAM_READ,
+			StreamCopy = Extensions::GL_STREAM_COPY,
+			StaticDraw = Extensions::GL_STATIC_DRAW,
+			StaticRead = Extensions::GL_STATIC_READ,
+			StaticCopy = Extensions::GL_STATIC_COPY,
+			DynamicDraw = Extensions::GL_DYNAMIC_DRAW,
+			DynamicRead = Extensions::GL_DYNAMIC_READ,
+			DynamicCopy = Extensions::GL_DYNAMIC_COPY
+		};
 	}
+
+	////////////////////////////////////////////////////////////
+	// OpenGL vertex buffer
+	////////////////////////////////////////////////////////////
+
+	class VertexBuffer
+	{
+	public:
+		VertexBuffer( const void* data, unsigned long size, unsigned int usage );
+		~VertexBuffer();
+
+		unsigned int GetIdentifier();
+
+	private:
+		unsigned int _identifier;
+
+		static Extensions::GLGENBUFFERSPROC glGenBuffers;
+		static Extensions::GLDELETEBUFFERSPROC glDeleteBuffers;
+		static Extensions::GLBINDBUFFERPROC glBindBuffer;
+		static Extensions::GLBUFFERDATAPROC glBufferData;
+	};
 }
 
 #endif

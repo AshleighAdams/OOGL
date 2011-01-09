@@ -37,6 +37,9 @@
 
 namespace GL
 {
+	Extensions::GLVERTEXATTRIBPOINTERPROC Context::glVertexAttribPointer = 0;
+	Extensions::GLENABLEVERTEXATTRIBARRAYPROC Context::glEnableVertexAttribArray = 0;
+
 	void Context::ClearColor( float r, float g, float b, float a )
 	{
 		glClearColor( r, g, b, a );
@@ -44,8 +47,28 @@ namespace GL
 
 	void Context::Clear( unsigned int buffers )
 	{
-		glClear( ( buffers & Buffer::Color ? GL_COLOR_BUFFER_BIT : 0 ) |
-				( buffers & Buffer::Depth ? GL_DEPTH_BUFFER_BIT : 0 ) |
-				( buffers & Buffer::Stencil ? GL_STENCIL_BUFFER_BIT : 0 ) );
+		glClear( buffers );
+	}
+
+	void Context::VertexAttribLocation( unsigned int index, unsigned int size, unsigned int type, unsigned int stride, const void* pointer )
+	{
+		if ( !glVertexAttribPointer )
+		{
+			glVertexAttribPointer = (Extensions::GLVERTEXATTRIBPOINTERPROC)Extensions::GetProcedure( "glVertexAttribPointer" );
+			glEnableVertexAttribArray = (Extensions::GLENABLEVERTEXATTRIBARRAYPROC)Extensions::GetProcedure( "glEnableVertexAttribArray" );
+		}
+
+		glVertexAttribPointer( index, size, type, GL_FALSE, stride, pointer );
+		glEnableVertexAttribArray( index );
+	}
+
+	void Context::VertexAttribLocation( unsigned int index, unsigned int size, unsigned int type, unsigned int stride, unsigned int offset )
+	{
+		VertexAttribLocation( index, size, type, stride, (void*)offset );
+	}
+
+	void Context::DrawArrays( unsigned int shape, unsigned int first, unsigned int count )
+	{
+		glDrawArrays( shape, first, count );
 	}
 }

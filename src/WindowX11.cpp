@@ -67,7 +67,7 @@ namespace GL
         _y = y;
 
         // Create the OpenGL context
-        _context = Context( _display, _window, vi );
+        _context = Context( _display, _window, vi, width, height );
 
         // Set additional window properties
         if ( flags & WindowFlags::CenterScreen )

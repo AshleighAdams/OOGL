@@ -40,9 +40,11 @@ namespace GL
 	Extensions::GLCREATEPROGRAMPROC Program::glCreateProgram = 0;
 	Extensions::GLDELETESHADERPROC Program::glDeleteProgram = 0;
 	Extensions::GLATTACHSHADERPROC Program::glAttachShader = 0;
+	Extensions::GLBINDATTRIBLOCATIONPROC Program::glBindAttribLocation = 0;
 	Extensions::GLLINKPROGRAMPROC Program::glLinkProgram = 0;
 	Extensions::GLGETPROGRAMPROC Program::glGetProgramiv = 0;
 	Extensions::GLGETPROGRAMINFOLOGPROC Program::glGetProgramInfoLog = 0;
+	Extensions::GLUSEPROGRAMPROC Program::glUseProgram = 0;
 
 	Program::Program()
 	{
@@ -51,9 +53,11 @@ namespace GL
 			glCreateProgram = (Extensions::GLCREATEPROGRAMPROC)Extensions::GetProcedure( "glCreateProgram" );
 			glDeleteProgram = (Extensions::GLDELETESHADERPROC)Extensions::GetProcedure( "glDeleteProgram" );
 			glAttachShader = (Extensions::GLATTACHSHADERPROC)Extensions::GetProcedure( "glAttachShader" );
+			glBindAttribLocation = (Extensions::GLBINDATTRIBLOCATIONPROC)Extensions::GetProcedure( "glBindAttribLocation" );
 			glLinkProgram = (Extensions::GLLINKPROGRAMPROC)Extensions::GetProcedure( "glLinkProgram" );
 			glGetProgramiv = (Extensions::GLGETPROGRAMPROC)Extensions::GetProcedure( "glGetProgramiv" );
 			glGetProgramInfoLog = (Extensions::GLGETPROGRAMINFOLOGPROC)Extensions::GetProcedure( "glGetProgramInfoLog" );
+			glUseProgram = (Extensions::GLUSEPROGRAMPROC)Extensions::GetProcedure( "glUseProgram" );
 		}
 
 		_identifier = glCreateProgram();
@@ -69,6 +73,11 @@ namespace GL
 		glAttachShader( _identifier, shader.GetIdentifier() );
 	}
 
+	void Program::BindAttribLocation( unsigned int index, const char* name )
+	{
+		glBindAttribLocation( _identifier, index, name );
+	}
+
 	void Program::Link()
 	{
 		glLinkProgram( _identifier );
@@ -81,6 +90,11 @@ namespace GL
 			glGetProgramInfoLog( _identifier, 2048, 0, buffer );
 			throw ProgramLinkException( buffer );
 		}
+	}
+
+	void Program::Use()
+	{
+		glUseProgram( _identifier );
 	}
 
 	unsigned int Program::GetIdentifier()

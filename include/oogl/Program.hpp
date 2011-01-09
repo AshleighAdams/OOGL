@@ -72,8 +72,11 @@ namespace GL
 		~Program();
 
 		void Attach( Shader& shader );
+		void BindAttribLocation( unsigned int index, const char* name );
 
 		void Link();
+
+		void Use();
 
 		unsigned int GetIdentifier();
 
@@ -83,9 +86,11 @@ namespace GL
 		static Extensions::GLCREATEPROGRAMPROC glCreateProgram;
 		static Extensions::GLDELETEPROGRAMPROC glDeleteProgram;
 		static Extensions::GLATTACHSHADERPROC glAttachShader;
+		static Extensions::GLBINDATTRIBLOCATIONPROC glBindAttribLocation;
 		static Extensions::GLLINKPROGRAMPROC glLinkProgram;
 		static Extensions::GLGETPROGRAMPROC glGetProgramiv;
 		static Extensions::GLGETPROGRAMINFOLOGPROC glGetProgramInfoLog;
+		static Extensions::GLUSEPROGRAMPROC glUseProgram;
 	};
 }
 
