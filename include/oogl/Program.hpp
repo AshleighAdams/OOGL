@@ -59,7 +59,7 @@ namespace GL
 		void BindAttribLocation( unsigned int index, const char* name );
 
 		bool Link();
-		bool Link(char* Error);
+		bool Link(char* Error, int Length);
 
 		void Use();
 

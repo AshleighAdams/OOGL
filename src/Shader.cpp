@@ -69,7 +69,7 @@ namespace GL
 		glShaderSource( _identifier, 1, &code, 0 );
 	}
 	
-	bool Shader::Compile(char* Error)
+	bool Shader::Compile(char* Error, int Length)
 	{
 		glCompileShader( _identifier );
 
@@ -77,7 +77,7 @@ namespace GL
 		glGetShaderiv( _identifier, Extensions::GL_COMPILE_STATUS, &status );
 		if ( status == 0 )
 		{
-			glGetShaderInfoLog( _identifier, sizeof(Error), 0, Error );
+			glGetShaderInfoLog( _identifier, Length, 0, Error );
 			return false;
 		}
 		return true;

@@ -34,3 +34,16 @@
 	<GL/gl.h>
 	<X11/X.h>
 
+1315755083 source:/SDK/OOGL/src/VertexBuffer.cpp
+	<oogl/VertexBuffer.hpp>
+
+1315755083 source:/SDK/OOGL/src/Window.cpp
+	<oogl/Window.hpp>
+
+1315755083 /SDK/OOGL/include/oogl/Window.hpp
+	<oogl/Context.hpp>
+
+1315755083 source:/SDK/OOGL/src/WindowX11.cpp
+	<oogl/Window.hpp>
+	<stdlib.h>
+

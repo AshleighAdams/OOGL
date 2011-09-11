@@ -70,7 +70,7 @@ namespace GL
 		void Source( const char* code );
 
 		bool Compile();
-		bool Compile(char* Error);
+		bool Compile(char* Error, int Length);
 
 		unsigned int GetIdentifier();
 

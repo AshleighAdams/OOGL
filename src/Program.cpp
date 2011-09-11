@@ -78,7 +78,7 @@ namespace GL
 		glBindAttribLocation( _identifier, index, name );
 	}
 
-	bool Program::Link(char* Error)
+	bool Program::Link(char* Error, int Length)
 	{
 		glLinkProgram( _identifier );
 
@@ -86,7 +86,7 @@ namespace GL
 		glGetProgramiv( _identifier, Extensions::GL_LINK_STATUS, &status );
 		if ( status == 0 )
 		{
-			glGetProgramInfoLog( _identifier, sizeof(Error), 0, Error );
+			glGetProgramInfoLog( _identifier, Length, 0, Error );
 			return false;
 		}
 		return true;
