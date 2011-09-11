@@ -68,8 +68,8 @@ namespace GL
 	{
 		glShaderSource( _identifier, 1, &code, 0 );
 	}
-
-	void Shader::Compile()
+	
+	bool Shader::Compile(char* Error)
 	{
 		glCompileShader( _identifier );
 
@@ -77,10 +77,20 @@ namespace GL
 		glGetShaderiv( _identifier, Extensions::GL_COMPILE_STATUS, &status );
 		if ( status == 0 )
 		{
-			char buffer[2048];
-			glGetShaderInfoLog( _identifier, 2048, 0, buffer );
-			throw ShaderCompileException( buffer );
+			glGetShaderInfoLog( _identifier, sizeof(Error), 0, Error );
+			return false;
 		}
+		return true;
+	}
+	
+	bool Shader::Compile()
+	{
+		glCompileShader( _identifier );
+
+		int status;
+		glGetShaderiv( _identifier, Extensions::GL_COMPILE_STATUS, &status );
+		
+		return status != 0;
 	}
 
 	unsigned int Shader::GetIdentifier()

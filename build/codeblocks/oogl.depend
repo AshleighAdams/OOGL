@@ -1,1 +1,36 @@
 # depslib dependency file v1.0
+1315755083 source:/SDK/OOGL/src/Context.cpp
+	<oogl/Context.hpp>
+
+1315755083 /SDK/OOGL/include/oogl/Context.hpp
+	<oogl/OpenGL.hpp>
+	<oogl/Shader.hpp>
+	<oogl/Program.hpp>
+	<oogl/VertexBuffer.hpp>
+
+1315755083 /SDK/OOGL/include/oogl/OpenGL.hpp
+	<windows.h>
+	<gl/gl.h>
+	<GL/glx.h>
+	<X11/X.h>
+
+1315756357 /SDK/OOGL/include/oogl/Shader.hpp
+	<oogl/OpenGL.hpp>
+	<exception>
+	<string>
+
+1315756452 /SDK/OOGL/include/oogl/Program.hpp
+	<oogl/OpenGL.hpp>
+	<oogl/Shader.hpp>
+	<exception>
+	<string>
+
+1315755083 /SDK/OOGL/include/oogl/VertexBuffer.hpp
+	<oogl/OpenGL.hpp>
+
+1315755083 source:/SDK/OOGL/src/ContextX11.cpp
+	<oogl/Context.hpp>
+	<GL/glx.h>
+	<GL/gl.h>
+	<X11/X.h>
+

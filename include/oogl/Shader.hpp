@@ -58,22 +58,6 @@ namespace GL
 	}
 
 	////////////////////////////////////////////////////////////
-	// Shader compilation exception
-	////////////////////////////////////////////////////////////
-
-	class ShaderCompileException : public std::exception
-	{
-	public:
-		ShaderCompileException( const char* error ) { _error = std::string( error ); }
-		~ShaderCompileException() throw() {};
-
-		const char* what() const throw() { return _error.c_str(); }
-
-	private:
-		std::string _error;
-	};
-
-	////////////////////////////////////////////////////////////
 	// OpenGL shader
 	////////////////////////////////////////////////////////////
 
@@ -85,7 +69,8 @@ namespace GL
 
 		void Source( const char* code );
 
-		void Compile();
+		bool Compile();
+		bool Compile(char* Error);
 
 		unsigned int GetIdentifier();
 

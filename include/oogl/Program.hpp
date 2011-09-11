@@ -46,22 +46,6 @@
 namespace GL
 {
 	////////////////////////////////////////////////////////////
-	// Program linking exception
-	////////////////////////////////////////////////////////////
-
-	class ProgramLinkException : public std::exception
-	{
-	public:
-		ProgramLinkException( const char* error ) { _error = std::string( error ); }
-		~ProgramLinkException() throw() {};
-
-		const char* what() const throw() { return _error.c_str(); }
-
-	private:
-		std::string _error;
-	};
-
-	////////////////////////////////////////////////////////////
 	// OpenGL shader program
 	////////////////////////////////////////////////////////////
 
@@ -74,7 +58,8 @@ namespace GL
 		void Attach( Shader& shader );
 		void BindAttribLocation( unsigned int index, const char* name );
 
-		void Link();
+		bool Link();
+		bool Link(char* Error);
 
 		void Use();
 
